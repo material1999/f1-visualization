@@ -2,6 +2,7 @@
 
 ## Interesting Formula 1 Statistics
 ## Made by: Máté Vass (76220125)
+## GitHub repository: https://github.com/material1999/f1-visualization
 ## Demo Video: TODO
 
 ---
