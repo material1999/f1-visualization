@@ -76,3 +76,15 @@ In this section, there are short descriptions of the different views that the to
 ## Interaction
 
 TODO
+
+<div style="page-break-after: always;"></div>
+
+## Prototype
+
+TODO
+
+<div style="page-break-after: always;"></div>
+
+## Scenario
+
+TODO

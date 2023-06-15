@@ -1,7 +1,8 @@
-#install.packages(c("tidyverse", "ggplot2"))
+#install.packages(c("tidyverse", "ggplot2", "shiny"))
 
 library(tidyverse)
 library(ggplot2)
+library(shiny)
 
 setwd("~/Documents/Egyetem/_MSc/3_szemeszter/erasmus/information_visualization/project/")
 
@@ -72,7 +73,7 @@ poleSitterBestTime <- function() {
   ggplot(qualifying.merge2, aes(x = year, y = bestTime, group = 1)) +
     geom_line() +
     geom_point() +
-    geom_smooth() +
+    geom_smooth(method = "loess", formula = "y ~ x") +
     labs(x = "Year", y = "Best Time of Pole Sitter",
          title = "Best Time of Pole Sitter by Year") +
     theme_minimal() +
@@ -187,12 +188,74 @@ gridToWinConversion <- function() {
     geom_bar(stat = "identity", width = 1, color = "white") +
     coord_polar("y", start = 0) +
     theme_void() +
+    theme(plot.title = element_text(size = 14, face = "bold")) +
+    labs(title = "Wins From Grid Position") +
     scale_fill_viridis_d()
   
 }
 
-numberOfWinsByDrivers()
-poleSitterBestTime()
-constructorChampionships()
-driverChampionships()
-gridToWinConversion()
+ui <- fluidPage(
+  
+  titlePanel("Interesting Formula 1 Statistics"),
+  
+  br(),
+  
+  sidebarLayout(
+    
+    sidebarPanel(
+      selectInput(
+        inputId = "track",
+        label = "Select Track:",
+        choices = circuits$circuitRef,
+        selected = "monaco"
+      ),
+      
+      br(),
+      
+      sliderInput(inputId = "year",
+                  "Select Time Period:",
+                  min = 1950,
+                  max = 2022,
+                  value = c(1950, 2022),
+                  ticks = FALSE,
+                  sep = "")
+    ),
+    
+    mainPanel(
+      
+      tabsetPanel(type = "tabs",
+                  tabPanel("Plot 1", plotOutput("plot1")),
+                  tabPanel("Plot 2", plotOutput("plot2")),
+                  tabPanel("Plot 3", plotOutput("plot3")),
+                  tabPanel("Plot 4", plotOutput("plot4")),
+                  tabPanel("Plot 5", plotOutput("plot5"))
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  output$plot1 <- renderPlot({
+    numberOfWinsByDrivers()
+  })
+  
+  output$plot2 <- renderPlot({
+    poleSitterBestTime()
+  })
+  
+  output$plot3 <- renderPlot({
+    constructorChampionships()
+  })
+  
+  output$plot4 <- renderPlot({
+    driverChampionships()
+  })
+  
+  output$plot5 <- renderPlot({
+    gridToWinConversion()
+  })
+  
+}
+
+shinyApp(ui = ui, server = server)
