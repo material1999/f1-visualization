@@ -179,7 +179,7 @@ gridToWinConversion <- function() {
   
   gridResultsPlot <- gridResultsCircuitsMerge %>%
     group_by(circuitRef, grid) %>%
-    summarise(sum = n()) %>%
+    summarise(sum = n(), .groups = "keep") %>%
     filter(circuitRef == "monaco")
   
   gridResultsPlot$grid <- as.character(gridResultsPlot$grid)
