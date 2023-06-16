@@ -29,16 +29,8 @@ ui <- fluidPage(
   br(),
   
   sidebarLayout(
-    
+  
     sidebarPanel(
-      selectInput(
-        inputId = "track",
-        label = "Select Track:",
-        choices = circuits$circuitRef,
-        selected = "monaco"
-      ),
-      
-      br(),
       
       sliderInput(inputId = "year",
                   "Select Time Period:",
@@ -46,25 +38,40 @@ ui <- fluidPage(
                   max = 2022,
                   value = c(1950, 2022),
                   ticks = FALSE,
-                  sep = "")
+                  sep = ""),
+      
+      conditionalPanel(condition = "output.showTrack == true",
+                     br(),
+                     selectInput(
+                       inputId = "track",
+                       label = "Select Track:",
+                       choices = circuits$circuitRef,
+                       selected = "monaco"
+                     )),
     ),
     
     mainPanel(
       
-      tabsetPanel(type = "tabs",
-                  tabPanel("Driver Wins", plotOutput("plot1")),
-                  tabPanel("Driver Championships", plotOutput("plot2")),
-                  tabPanel("Constructor Championships", plotOutput("plot3")),
-                  tabPanel("Best Lap Times", plotOutput("plot4")),
-                  tabPanel("Wins From Grid Position", plotOutput("plot5"))
+      tabsetPanel(id = "plotTabs",
+                  tabPanel("Driver Wins", value = 1, plotOutput("plot1")),
+                  tabPanel("Driver Championships", value = 2, plotOutput("plot2")),
+                  tabPanel("Constructor Championships", value = 3, plotOutput("plot3")),
+                  tabPanel("Best Lap Times", value = 4, plotOutput("plot4")),
+                  tabPanel("Wins From Grid Position", value = 5, plotOutput("plot5"))
       )
     )
   )
 )
 
+
 # Define server ----------------------------------------------------------------
 
 server <- function(input, output, session) {
+  
+  output$showTrack <- reactive({
+    ifelse(input$plotTabs == 4 | input$plotTabs == 5, TRUE, FALSE)
+  })
+  outputOptions(output, "showTrack", suspendWhenHidden = FALSE)
   
   numberOfWinsByDrivers <- function() {
     
