@@ -1,11 +1,12 @@
-# Load packages ----------------------------------------------------------------
+# Install and load packages ----------------------------------------------------
 
-#install.packages(c("tidyverse", "ggplot2", "shiny"))
+#install.packages(c("tidyverse", "ggplot2", "shiny", "plotly"))
 
 library(tidyverse)
 library(ggplot2)
 library(shiny)
 library(gridExtra)
+library(plotly)
 
 # Load data --------------------------------------------------------------------
 
@@ -86,11 +87,16 @@ ui <- fluidPage(
     mainPanel(
       
       tabsetPanel(id = "plotTabs",
-                  tabPanel("Driver Wins", value = 1, plotOutput("plot1")),
-                  tabPanel("Driver Championships", value = 2, plotOutput("plot2")),
-                  tabPanel("Constructor Championships", value = 3, plotOutput("plot3")),
-                  tabPanel("Best Lap Times", value = 4, plotOutput("plot4")),
-                  tabPanel("Wins From Grid Position", value = 5, plotOutput("plot5"))
+                  tabPanel("Driver Wins", value = 1, plotlyOutput("plot1",
+                                                                  height = "600px")),
+                  tabPanel("Driver Championships", value = 2, plotlyOutput("plot2",
+                                                                           height = "600px")),
+                  tabPanel("Constructor Championships", value = 3, plotlyOutput("plot3",
+                                                                                height = "600px")),
+                  tabPanel("Best Lap Times", value = 4, plotlyOutput("plot4",
+                                                                     height = "600px")),
+                  tabPanel("Wins From Grid Position", value = 5, plotlyOutput("plot5",
+                                                                              height = "600px"))
       )
     )
   )
@@ -147,7 +153,7 @@ server <- function(input, output, session) {
     
     ggplot(exampleTask, aes(x = reorder(driverRef, -sum), y = sum, fill = driverRef)) +
       geom_bar(stat = "identity", width = 0.7) +
-      labs(x = "Driver", y = "Number of Wins", title = "Number of Wins by Drivers") +
+      labs(x = "Driver", y = "Number of Wins", title = "Number of Driver Wins") +
       theme_minimal() +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
@@ -255,7 +261,8 @@ server <- function(input, output, session) {
       filter(circuitRef == input$track, input$year[2] >= year, year >= input$year[1]) %>%
       arrange(., year)
     
-    qualifying.merge2Compare <- merge(x = qualifying.merge1, y = qualifying.filtered, by = "raceId") %>%
+    qualifying.merge2Compare <- merge(x = qualifying.merge1, y = qualifying.filtered,
+                                      by = "raceId") %>%
       mutate(bestTime = pmin(q1, q2, q3, na.rm=TRUE)) %>%
       select(circuitRef, year, bestTime) %>%
       filter(circuitRef == input$trackCompare, input$year[2] >= year, year >= input$year[1]) %>%
@@ -265,7 +272,7 @@ server <- function(input, output, session) {
       geom_line() +
       geom_point() +
       geom_smooth(method = "loess", formula = "y ~ x") +
-      labs(x = "Year", y = "Best Time of Pole Sitter",
+      labs(x = "Year", y = "Pole Sitter Time",
            title = "Best Lap Time of Pole Sitter by Year",
            subtitle = input$track) +
       theme_minimal() +
@@ -278,8 +285,8 @@ server <- function(input, output, session) {
       geom_line() +
       geom_point() +
       geom_smooth(method = "loess", formula = "y ~ x") +
-      labs(x = "Year", y = "Best Time of Pole Sitter",
-           title = "Best Lap Time of Pole Sitter by Year",
+      labs(x = "Year", y = "Pole Sitter Time",
+           title = "Best Lap Time of Pole Sitter",
            subtitle = input$trackCompare) +
       theme_minimal() +
       theme(plot.title = element_text(size = 20, face = "bold"),
@@ -287,7 +294,7 @@ server <- function(input, output, session) {
             axis.text.y = element_text(size = 10)) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
     
-    grid.arrange(p1, p2, nrow = 2)
+    subplot(p1, p2, nrows = 2)
     
   }
   
@@ -326,7 +333,7 @@ server <- function(input, output, session) {
     p1 <- ggplot(gridResultsPlot, aes(x = "", y = sum,
                                       fill = reorder(grid, as.integer(grid)))) +
       geom_bar(stat = "identity", width = 1, color = "white") +
-      coord_polar("y", start = 0) +
+      #coord_polar("y", start = 0) +
       theme_void() +
       theme(plot.title = element_text(size = 20, face = "bold"),
             plot.subtitle = element_text(size = 20, face = "italic")) +
@@ -337,7 +344,7 @@ server <- function(input, output, session) {
     p2 <- ggplot(gridResultsPlotCompare, aes(x = "", y = sum,
                                              fill = reorder(grid, as.integer(grid)))) +
       geom_bar(stat = "identity", width = 1, color = "white") +
-      coord_polar("y", start = 0) +
+      #coord_polar("y", start = 0) +
       theme_void() +
       theme(plot.title = element_text(size = 20, face = "bold"),
             plot.subtitle = element_text(size = 20, face = "italic")) +
@@ -345,27 +352,27 @@ server <- function(input, output, session) {
            subtitle = input$trackCompare) +
       scale_fill_viridis_d()
     
-    grid.arrange(p1, p2, ncol = 2)
+    subplot(p1, p2)
     
   }
   
-  output$plot1 <- renderPlot({
+  output$plot1 <- renderPlotly({
     numberOfWinsByDrivers()
   })
   
-  output$plot2 <- renderPlot({
+  output$plot2 <- renderPlotly({
     driverChampionships()
   })
   
-  output$plot3 <- renderPlot({
+  output$plot3 <- renderPlotly({
     constructorChampionships()
   })
   
-  output$plot4 <- renderPlot({
+  output$plot4 <- renderPlotly({
     poleSitterBestTime()
   })
   
-  output$plot5 <- renderPlot({
+  output$plot5 <- renderPlotly({
     gridToWinConversion()
   })
   
