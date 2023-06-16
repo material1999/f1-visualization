@@ -58,6 +58,17 @@ ui <- fluidPage(
                          min = 0,
                          max = NA,
                          step = 1,
+                       )),
+      
+      conditionalPanel(condition = "output.showMinTitles == true",
+                       br(),
+                       numericInput(
+                         inputId = "minTitles",
+                         label = "Minimum titles:",
+                         value = 2,
+                         min = 0,
+                         max = NA,
+                         step = 1,
                        ))
       
     ),
@@ -89,6 +100,11 @@ server <- function(input, output, session) {
     ifelse(input$plotTabs == 1, TRUE, FALSE)
   })
   outputOptions(output, "showMinWins", suspendWhenHidden = FALSE)
+  
+  output$showMinTitles <- reactive({
+    ifelse(input$plotTabs == 2 | input$plotTabs == 3, TRUE, FALSE)
+  })
+  outputOptions(output, "showMinTitles", suspendWhenHidden = FALSE)
   
   numberOfWinsByDrivers <- function() {
     
@@ -148,7 +164,7 @@ server <- function(input, output, session) {
     driversSummarise <- driversFinal %>%
       group_by(driverRef) %>%
       summarise(sum = n()) %>%
-      filter(, sum >= 1)
+      filter(, sum >= input$minTitles)
     
     ggplot(driversSummarise, aes(x = reorder(driverRef, -sum), y = sum,
                                  fill = driverRef)) +
@@ -185,7 +201,8 @@ server <- function(input, output, session) {
     
     constructorsSummarise <- constructorsFinal %>%
       group_by(constructorRef) %>%
-      summarise(sum = n())
+      summarise(sum = n()) %>%
+      filter(, sum >= input$minTitles)
     
     ggplot(constructorsSummarise, aes(x = reorder(constructorRef, -sum), y = sum,
                                       fill = constructorRef)) +
