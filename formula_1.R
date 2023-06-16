@@ -104,7 +104,7 @@ server <- function(input, output, session) {
   driverChampionships <- function() {
     
     racesFinal <- races %>% group_by(year) %>%
-      filter(round == max(round)) %>%
+      filter(round == max(round), input$year[2] >= year, year >= input$year[1]) %>%
       select(year, raceId) %>%
       arrange(year)
     
@@ -125,7 +125,7 @@ server <- function(input, output, session) {
     driversSummarise <- driversFinal %>%
       group_by(driverRef) %>%
       summarise(sum = n()) %>%
-      filter(, sum >= 2)
+      filter(, sum >= 1)
     
     ggplot(driversSummarise, aes(x = reorder(driverRef, -sum), y = sum,
                                  fill = driverRef)) +
@@ -142,7 +142,7 @@ server <- function(input, output, session) {
   constructorChampionships <- function() {
     
     racesFinal <- races %>% group_by(year) %>%
-      filter(round == max(round)) %>%
+      filter(round == max(round), input$year[2] >= year, year >= input$year[1]) %>%
       select(year, raceId) %>%
       arrange(year)
     
@@ -197,7 +197,7 @@ server <- function(input, output, session) {
     qualifying.merge2 <- merge(x = qualifying.merge1, y = qualifying.filtered, by = "raceId") %>%
       mutate(bestTime = pmin(q1, q2, q3, na.rm=TRUE)) %>%
       select(circuitRef, year, bestTime) %>%
-      filter(circuitRef == input$track) %>%
+      filter(circuitRef == input$track, input$year[2] >= year, year >= input$year[1]) %>%
       arrange(., year)
     
     ggplot(qualifying.merge2, aes(x = year, y = bestTime, group = 1)) +
@@ -230,7 +230,8 @@ server <- function(input, output, session) {
     
     gridResultsCircuitsMerge <- merge(x = gridResultsMerge, y = circuits.filtered,
                                       by = "circuitId", type = "full") %>%
-      select(circuitRef, year, grid, position)
+      select(circuitRef, year, grid, position) %>%
+      filter(input$year[2] >= year, year >= input$year[1])
     
     gridResultsPlot <- gridResultsCircuitsMerge %>%
       group_by(circuitRef, grid) %>%
