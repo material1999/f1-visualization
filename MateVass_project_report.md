@@ -79,9 +79,9 @@ As mentioned earlier, the users can interact with the plots:
 
 - with the sidebar on the left, they can adjust their settings and the changes will appear instantly on the right side
 
-- the *year* attribute is there for every plot
+- the *year* attribute can be adjusted for every plot
 
-- for each plot, there are different attributes that the users can modify
+- for each plot, there are other specific attributes that the users can modify
 
 <div style="page-break-after: always;"></div>
 

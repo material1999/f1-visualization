@@ -5,6 +5,7 @@
 library(tidyverse)
 library(ggplot2)
 library(shiny)
+library(gridExtra)
 
 # Load data --------------------------------------------------------------------
 
@@ -48,6 +49,15 @@ ui <- fluidPage(
                        choices = circuits$circuitRef,
                        selected = "monaco"
                      )),
+      
+      conditionalPanel(condition = "output.showTrackCompare == true",
+                       br(),
+                       selectInput(
+                         inputId = "trackCompare",
+                         label = "Compare To:",
+                         choices = circuits$circuitRef,
+                         selected = "catalunya"
+                       )),
       
       conditionalPanel(condition = "output.showMinWins == true",
                        br(),
@@ -95,6 +105,11 @@ server <- function(input, output, session) {
     ifelse(input$plotTabs == 4 | input$plotTabs == 5, TRUE, FALSE)
   })
   outputOptions(output, "showTrack", suspendWhenHidden = FALSE)
+  
+  output$showTrackCompare <- reactive({
+    ifelse(input$plotTabs == 4 | input$plotTabs == 5, TRUE, FALSE)
+  })
+  outputOptions(output, "showTrackCompare", suspendWhenHidden = FALSE)
   
   output$showMinWins <- reactive({
     ifelse(input$plotTabs == 1, TRUE, FALSE)
@@ -240,16 +255,39 @@ server <- function(input, output, session) {
       filter(circuitRef == input$track, input$year[2] >= year, year >= input$year[1]) %>%
       arrange(., year)
     
-    ggplot(qualifying.merge2, aes(x = year, y = bestTime, group = 1)) +
+    qualifying.merge2Compare <- merge(x = qualifying.merge1, y = qualifying.filtered, by = "raceId") %>%
+      mutate(bestTime = pmin(q1, q2, q3, na.rm=TRUE)) %>%
+      select(circuitRef, year, bestTime) %>%
+      filter(circuitRef == input$trackCompare, input$year[2] >= year, year >= input$year[1]) %>%
+      arrange(., year)
+    
+    p1 <- ggplot(qualifying.merge2, aes(x = year, y = bestTime, group = 1)) +
       geom_line() +
       geom_point() +
       geom_smooth(method = "loess", formula = "y ~ x") +
       labs(x = "Year", y = "Best Time of Pole Sitter",
-           title = "Best Lap Time of Pole Sitter by Year") +
+           title = "Best Lap Time of Pole Sitter by Year",
+           subtitle = input$track) +
       theme_minimal() +
       theme(plot.title = element_text(size = 20, face = "bold"),
+            plot.subtitle = element_text(size = 20, face = "italic"),
             axis.text.y = element_text(size = 10)) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
+    
+    p2 <- ggplot(qualifying.merge2Compare, aes(x = year, y = bestTime, group = 1)) +
+      geom_line() +
+      geom_point() +
+      geom_smooth(method = "loess", formula = "y ~ x") +
+      labs(x = "Year", y = "Best Time of Pole Sitter",
+           title = "Best Lap Time of Pole Sitter by Year",
+           subtitle = input$trackCompare) +
+      theme_minimal() +
+      theme(plot.title = element_text(size = 20, face = "bold"),
+            plot.subtitle = element_text(size = 20, face = "italic"),
+            axis.text.y = element_text(size = 10)) +
+      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
+    
+    grid.arrange(p1, p2, nrow = 2)
     
   }
   
@@ -278,15 +316,36 @@ server <- function(input, output, session) {
       summarise(sum = n(), .groups = "keep") %>%
       filter(circuitRef == input$track)
     
+    gridResultsPlotCompare <- gridResultsCircuitsMerge %>%
+      group_by(circuitRef, grid) %>%
+      summarise(sum = n(), .groups = "keep") %>%
+      filter(circuitRef == input$trackCompare)
+    
     gridResultsPlot$grid <- as.character(gridResultsPlot$grid)
     
-    ggplot(gridResultsPlot, aes(x = "", y = sum, fill = reorder(grid, as.integer(grid)))) +
+    p1 <- ggplot(gridResultsPlot, aes(x = "", y = sum,
+                                      fill = reorder(grid, as.integer(grid)))) +
       geom_bar(stat = "identity", width = 1, color = "white") +
       coord_polar("y", start = 0) +
       theme_void() +
-      theme(plot.title = element_text(size = 20, face = "bold")) +
-      labs(fill = "Grid Positions", title = "Wins From Grid Position") +
+      theme(plot.title = element_text(size = 20, face = "bold"),
+            plot.subtitle = element_text(size = 20, face = "italic")) +
+      labs(fill = "Grid Positions", title = "Wins From Grid Position",
+           subtitle = input$track) +
       scale_fill_viridis_d()
+    
+    p2 <- ggplot(gridResultsPlotCompare, aes(x = "", y = sum,
+                                             fill = reorder(grid, as.integer(grid)))) +
+      geom_bar(stat = "identity", width = 1, color = "white") +
+      coord_polar("y", start = 0) +
+      theme_void() +
+      theme(plot.title = element_text(size = 20, face = "bold"),
+            plot.subtitle = element_text(size = 20, face = "italic")) +
+      labs(fill = "Grid Positions", title = "Wins From Grid Position",
+           subtitle = input$trackCompare) +
+      scale_fill_viridis_d()
+    
+    grid.arrange(p1, p2, ncol = 2)
     
   }
   
