@@ -33,7 +33,7 @@ ui <- fluidPage(
     sidebarPanel(
       
       sliderInput(inputId = "year",
-                  "Select Time Period:",
+                  "Time Period:",
                   min = 1950,
                   max = 2022,
                   value = c(1950, 2022),
@@ -44,10 +44,22 @@ ui <- fluidPage(
                      br(),
                      selectInput(
                        inputId = "track",
-                       label = "Select Track:",
+                       label = "Track:",
                        choices = circuits$circuitRef,
                        selected = "monaco"
                      )),
+      
+      conditionalPanel(condition = "output.showMinWins == true",
+                       br(),
+                       numericInput(
+                         inputId = "minWins",
+                         label = "Minimum wins:",
+                         value = 10,
+                         min = 0,
+                         max = NA,
+                         step = 1,
+                       ))
+      
     ),
     
     mainPanel(
@@ -73,19 +85,30 @@ server <- function(input, output, session) {
   })
   outputOptions(output, "showTrack", suspendWhenHidden = FALSE)
   
+  output$showMinWins <- reactive({
+    ifelse(input$plotTabs == 1, TRUE, FALSE)
+  })
+  outputOptions(output, "showMinWins", suspendWhenHidden = FALSE)
+  
   numberOfWinsByDrivers <- function() {
     
     results.filtered <- results %>%
       select(raceId, driverId, positionOrder) %>%
       filter(, positionOrder == "1")
     
+    races.filtered <- races %>%
+      select(raceId, year)
+    
+    results.filtered_merged <- merge(x = results.filtered, y = races.filtered, by = "raceId") %>%
+      filter(input$year[2] >= year, year >= input$year[1])
+    
     drivers.filtered <- drivers %>%
       select(driverId, driverRef)
     
-    summarise <- merge(x = results.filtered, y = drivers.filtered, by = "driverId") %>%
+    summarise <- merge(x = results.filtered_merged, y = drivers.filtered, by = "driverId") %>%
       group_by(driverId) %>%
       summarise(sum = sum(positionOrder)) %>%
-      filter(, sum >= 25)
+      filter(, sum >= input$minWins)
     
     exampleTask <- merge(x = drivers.filtered, y = summarise, by = "driverId") %>%
       arrange(desc(sum)) %>%

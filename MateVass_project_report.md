@@ -53,7 +53,7 @@ The visualization tool is going to be built using:
 
 - desktop/web application: TODO
 
-TODO
+The application has a sidebar on the left, where users can adjust their settings for the actual plot. On the right side, there are different tabs to select between the available plots. The available settings on the left change dynamically based on which plot is selected.
 
 <div style="page-break-after: always;"></div>
 
@@ -75,7 +75,13 @@ In this section, there are short descriptions of the different views that the to
 
 ## Interaction
 
-TODO
+As mentioned earlier, the users can interact with the plots:
+
+- with the sidebar on the left, they can adjust their settings and the changes will appear instantly on the right side
+
+- the *year* attribute is there for every plot
+
+- for each plot, there are different attributes that the users can modify
 
 <div style="page-break-after: always;"></div>
 
