@@ -95,8 +95,8 @@ ui <- fluidPage(
                                                                                 height = "600px")),
                   tabPanel("Best Lap Times", value = 4, plotlyOutput("plot4",
                                                                      height = "600px")),
-                  tabPanel("Wins From Grid Position", value = 5, plotlyOutput("plot5",
-                                                                              height = "600px"))
+                  tabPanel("Wins From Grid Position", value = 5, plotOutput("plot5",
+                                                                            height = "600px"))
       )
     )
   )
@@ -284,7 +284,6 @@ server <- function(input, output, session) {
            title = "Best Lap Time of Pole Sitter by Year",
            subtitle = input$track) +
       theme_minimal() +
-      #scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             plot.subtitle = element_text(size = 20, face = "italic"),
             axis.text.y = element_text(size = 10)) +
@@ -342,10 +341,14 @@ server <- function(input, output, session) {
     p1 <- ggplot(gridResultsPlot, aes(x = "", y = sum,
                                       fill = reorder(grid, as.integer(grid)))) +
       geom_bar(stat = "identity", width = 1, color = "white") +
-      #coord_polar("y", start = 0) +
+      coord_polar("y", start = 0) +
       theme_void() +
-      theme(plot.title = element_text(size = 20, face = "bold"),
-            plot.subtitle = element_text(size = 20, face = "italic")) +
+      geom_text(aes(label = sum, x = 1.7),
+                position = position_stack(vjust = 0.5), color = "black", size = 5) +
+      theme(plot.title = element_text(size = 30, face = "bold"),
+            plot.subtitle = element_text(size = 30, face = "italic"),
+            legend.title = element_text(size = 15),
+            legend.text = element_text(size = 15)) +
       labs(fill = "Grid Positions", title = "Wins From Grid Position",
            subtitle = input$track) +
       scale_fill_viridis_d()
@@ -353,15 +356,20 @@ server <- function(input, output, session) {
     p2 <- ggplot(gridResultsPlotCompare, aes(x = "", y = sum,
                                              fill = reorder(grid, as.integer(grid)))) +
       geom_bar(stat = "identity", width = 1, color = "white") +
-      #coord_polar("y", start = 0) +
+      coord_polar("y", start = 0) +
       theme_void() +
-      theme(plot.title = element_text(size = 20, face = "bold"),
-            plot.subtitle = element_text(size = 20, face = "italic")) +
+      geom_text(aes(label = sum, x = 1.7),
+                position = position_stack(vjust = 0.5), color = "black", size = 5) +
+      theme(plot.title = element_text(size = 30, face = "bold"),
+            plot.subtitle = element_text(size = 30, face = "italic"),
+            legend.title = element_text(size = 15),
+            legend.text = element_text(size = 15)) +
       labs(fill = "Grid Positions", title = "Wins From Grid Position",
            subtitle = input$trackCompare) +
       scale_fill_viridis_d()
     
-    subplot(p1, p2)
+    #subplot(p1, p2)
+    grid.arrange(p1, p2, ncol = 2)
     
   }
   
@@ -381,7 +389,7 @@ server <- function(input, output, session) {
     poleSitterBestTime()
   })
   
-  output$plot5 <- renderPlotly({
+  output$plot5 <- renderPlot({
     gridToWinConversion()
   })
   
