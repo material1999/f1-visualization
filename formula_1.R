@@ -155,7 +155,7 @@ server <- function(input, output, session) {
       geom_bar(stat = "identity", width = 0.7) +
       labs(x = "Driver", y = "Number of Wins", title = "Number of Driver Wins") +
       theme_minimal() +
-      scale_y_continuous(breaks = seq(0, 110, by = 10)) +
+      scale_y_continuous(breaks = seq(min(exampleTask$sum), max(exampleTask$sum), by = 10)) +
       geom_text(aes(label = sum), nudge_y = 2) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
@@ -195,7 +195,8 @@ server <- function(input, output, session) {
       labs(x = "Driver", y = "Number of Championships",
            title = "Number of Driver Championships") +
       theme_minimal() +
-      scale_y_continuous(breaks = seq(0, 10, by = 1)) +
+      scale_y_continuous(breaks = seq(min(driversSummarise$sum),
+                                      max(driversSummarise$sum), by = 1)) +
       geom_text(aes(label = sum), nudge_y = 0.2) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
@@ -235,7 +236,8 @@ server <- function(input, output, session) {
       labs(x = "Constructor", y = "Number of Championships",
            title = "Number of Constructor Championships") +
       theme_minimal() +
-      scale_y_continuous(breaks = seq(0, 20, by = 1)) +
+      scale_y_continuous(breaks = seq(min(constructorsSummarise$sum),
+                                      max(constructorsSummarise$sum), by = 1)) +
       geom_text(aes(label = sum), nudge_y = 0.4) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
@@ -282,6 +284,7 @@ server <- function(input, output, session) {
            title = "Best Lap Time of Pole Sitter by Year",
            subtitle = input$track) +
       theme_minimal() +
+      #scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             plot.subtitle = element_text(size = 20, face = "italic"),
             axis.text.y = element_text(size = 10)) +
