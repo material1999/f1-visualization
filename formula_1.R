@@ -292,9 +292,10 @@ server <- function(input, output, session) {
       arrange(., year)
     
     p1 <- ggplot(qualifying.merge2, aes(x = year, y = bestTime, group = 1)) +
-      geom_line() +
+      geom_line(linetype = "dashed") +
       geom_point() +
       geom_smooth(method = "loess", formula = "y ~ x") +
+      scale_x_continuous(breaks=seq(1950, 2022, 1)) +
       labs(x = "Year", y = "Pole Sitter Time",
            title = "Best Lap Time of Pole Sitter by Year",
            subtitle = input$track) +
@@ -305,9 +306,10 @@ server <- function(input, output, session) {
       theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
     
     p2 <- ggplot(qualifying.merge2Compare, aes(x = year, y = bestTime, group = 1)) +
-      geom_line() +
+      geom_line(linetype = "dashed") +
       geom_point() +
       geom_smooth(method = "loess", formula = "y ~ x") +
+      scale_x_continuous(breaks=seq(1950, 2022, 1)) +
       labs(x = "Year", y = "Pole Sitter Time",
            title = "Best Lap Time of Pole Sitter",
            subtitle = input$trackCompare) +
