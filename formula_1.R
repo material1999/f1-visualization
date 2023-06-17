@@ -155,6 +155,8 @@ server <- function(input, output, session) {
       geom_bar(stat = "identity", width = 0.7) +
       labs(x = "Driver", y = "Number of Wins", title = "Number of Driver Wins") +
       theme_minimal() +
+      scale_y_continuous(breaks = seq(0, 110, by = 10)) +
+      geom_text(aes(label = sum), nudge_y = 2) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
@@ -193,6 +195,8 @@ server <- function(input, output, session) {
       labs(x = "Driver", y = "Number of Championships",
            title = "Number of Driver Championships") +
       theme_minimal() +
+      scale_y_continuous(breaks = seq(0, 10, by = 1)) +
+      geom_text(aes(label = sum), nudge_y = 0.2) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
@@ -231,6 +235,8 @@ server <- function(input, output, session) {
       labs(x = "Constructor", y = "Number of Championships",
            title = "Number of Constructor Championships") +
       theme_minimal() +
+      scale_y_continuous(breaks = seq(0, 20, by = 1)) +
+      geom_text(aes(label = sum), nudge_y = 0.4) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
