@@ -1,12 +1,13 @@
 # Install and load packages ----------------------------------------------------
 
-#install.packages(c("tidyverse", "ggplot2", "shiny", "plotly"))
+#install.packages(c("tidyverse", "ggplot2", "shiny", "plotly", "treemapify"))
 
 library(tidyverse)
 library(ggplot2)
 library(shiny)
 library(gridExtra)
 library(plotly)
+library(treemapify)
 
 # Load data --------------------------------------------------------------------
 
@@ -87,8 +88,8 @@ ui <- fluidPage(
     mainPanel(
       
       tabsetPanel(id = "plotTabs",
-                  tabPanel("Driver Wins", value = 1, plotlyOutput("plot1",
-                                                                  height = "600px")),
+                  tabPanel("Driver Wins", value = 1, plotOutput("plot1",
+                                                                height = "600px")),
                   tabPanel("Driver Championships", value = 2, plotlyOutput("plot2",
                                                                            height = "600px")),
                   tabPanel("Constructor Championships", value = 3, plotlyOutput("plot3",
@@ -151,15 +152,27 @@ server <- function(input, output, session) {
       arrange(desc(sum)) %>%
       select(driverRef, sum)
     
-    ggplot(exampleTask, aes(x = reorder(driverRef, -sum), y = sum, fill = driverRef)) +
-      geom_bar(stat = "identity", width = 0.7) +
-      labs(x = "Driver", y = "Number of Wins", title = "Number of Driver Wins") +
-      theme_minimal() +
-      scale_y_continuous(breaks = seq(min(exampleTask$sum), max(exampleTask$sum), by = 10)) +
-      geom_text(aes(label = sum), nudge_y = 2) +
-      theme(plot.title = element_text(size = 20, face = "bold"),
-            axis.text.y = element_text(size = 10)) +
-      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
+    # ggplot(exampleTask, aes(x = reorder(driverRef, -sum), y = sum, fill = driverRef)) +
+    #   geom_bar(stat = "identity", width = 0.7) +
+    #   labs(x = "Driver", y = "Number of Wins", title = "Number of Driver Wins") +
+    #   theme_minimal() +
+    #   scale_y_continuous(breaks = seq(min(exampleTask$sum), max(exampleTask$sum), by = 10)) +
+    #   geom_text(aes(label = sum), nudge_y = 2) +
+    #   theme(plot.title = element_text(size = 20, face = "bold"),
+    #         axis.text.y = element_text(size = 10)) +
+    #   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
+    
+    ggplot(exampleTask, aes(area = sum, fill = driverRef,
+                            label = paste(driverRef, sum, sep = "\n"))) +
+      labs(title = "Number of Driver Wins") +
+      geom_treemap() +
+      geom_treemap_text(colour = "white",
+                        place = "centre",
+                        size = 15) +
+      scale_fill_viridis_d() +
+      theme(plot.title = element_text(size = 30, face = "bold"),
+            legend.title = element_text(size = 15),
+            legend.text = element_text(size = 15))
     
   }
   
@@ -200,7 +213,8 @@ server <- function(input, output, session) {
       geom_text(aes(label = sum), nudge_y = 0.2) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
-      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
+      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5)) +
+      scale_fill_viridis_d()
     
   }
   
@@ -241,7 +255,8 @@ server <- function(input, output, session) {
       geom_text(aes(label = sum), nudge_y = 0.4) +
       theme(plot.title = element_text(size = 20, face = "bold"),
             axis.text.y = element_text(size = 10)) +
-      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))
+      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5)) +
+      scale_fill_viridis_d()
     
   }
   
@@ -373,7 +388,7 @@ server <- function(input, output, session) {
     
   }
   
-  output$plot1 <- renderPlotly({
+  output$plot1 <- renderPlot({
     numberOfWinsByDrivers()
   })
   
