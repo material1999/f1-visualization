@@ -19,7 +19,7 @@ I found a dataset on Kaggle representing Formula 1 results, statistics and metad
 
 <figure>
   <img src="pictures/1.png"/>
-  <figcaption style="text-align: center;"><a href="https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020">Check out the dataset!</a></figcaption>
+  <figcaption style="text-align: center; align: center;"><a href="https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020">Check out the dataset!</a></figcaption>
 </figure>
 
 <div style="page-break-after: always;"></div>
