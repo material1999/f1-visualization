@@ -8,8 +8,6 @@
 
 ---
 
-<br>
-
 ## Description
 
 Formula 1 is the highest class international open-wheel single-seater formula racing series in the world, with hundreds of millions of followers worldwide. Every year, unbelievably large amounts of money is spent by the constructors to develop the fastest car possible in order to attract wealthy sponsors and create great advertisement for the brand itself. Winning a season in Formula 1 is considered to be the highest achievement in the world of motorsports. Following the sport is very easy due to its popularity. However, only a few tools are publicly available for free to analyze results and statistics at a deeper level.
@@ -167,7 +165,26 @@ In the second prototype, I created the base of the UI with some controls. Howeve
   <p align="center">Prototype 2 - Code</p>
 </figure>
 
+### Prototype 3
 
+In this prototype, I connected the UI controls with the plots itself, so these interactions already worked now. However, the plots were still not polished and the UI needed more interactivity.
+
+<figure>
+  <img src="pictures/3_1.png"/>
+  <p align="center">Prototype 3 - Driver Wins</p>
+</figure>
+
+<figure>
+  <img src="pictures/3_2.png"/>
+  <p align="center">Prototype 3 - Wins From Grid Position</p>
+</figure>
+
+<br>
+
+<figure>
+  <img src="pictures/3_3.png"/>
+  <p align="center">Prototype 3 - Code</p>
+</figure>
 
 <div style="page-break-after: always;"></div>
 
