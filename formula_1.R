@@ -67,7 +67,18 @@ ui <- fluidPage(
                          inputId = "minWins",
                          label = "Minimum wins:",
                          value = 10,
-                         min = 0,
+                         min = 1,
+                         max = NA,
+                         step = 1,
+                       )),
+      
+      conditionalPanel(condition = "output.showMinWins == true",
+                       br(),
+                       numericInput(
+                         inputId = "maxWins",
+                         label = "Maximum wins:",
+                         value = 110,
+                         min = 1,
                          max = NA,
                          step = 1,
                        )),
@@ -78,7 +89,18 @@ ui <- fluidPage(
                          inputId = "minTitles",
                          label = "Minimum titles:",
                          value = 2,
-                         min = 0,
+                         min = 1,
+                         max = NA,
+                         step = 1,
+                       )),
+      
+      conditionalPanel(condition = "output.showMinTitles == true",
+                       br(),
+                       numericInput(
+                         inputId = "maxTitles",
+                         label = "Maximum titles:",
+                         value = 20,
+                         min = 1,
                          max = NA,
                          step = 1,
                        ))
@@ -146,7 +168,7 @@ server <- function(input, output, session) {
     summarise <- merge(x = results.filtered_merged, y = drivers.filtered, by = "driverId") %>%
       group_by(driverId) %>%
       summarise(sum = sum(positionOrder)) %>%
-      filter(, sum >= input$minWins)
+      filter(, sum >= input$minWins, input$maxWins >= sum)
     
     exampleTask <- merge(x = drivers.filtered, y = summarise, by = "driverId") %>%
       arrange(desc(sum)) %>%
@@ -200,7 +222,7 @@ server <- function(input, output, session) {
     driversSummarise <- driversFinal %>%
       group_by(driverRef) %>%
       summarise(sum = n()) %>%
-      filter(, sum >= input$minTitles)
+      filter(, sum >= input$minTitles, input$maxTitles >= sum)
     
     ggplot(driversSummarise, aes(x = reorder(driverRef, -sum), y = sum,
                                  fill = driverRef)) +
@@ -242,7 +264,7 @@ server <- function(input, output, session) {
     constructorsSummarise <- constructorsFinal %>%
       group_by(constructorRef) %>%
       summarise(sum = n()) %>%
-      filter(, sum >= input$minTitles)
+      filter(, sum >= input$minTitles, input$maxTitles >= sum)
     
     ggplot(constructorsSummarise, aes(x = reorder(constructorRef, -sum), y = sum,
                                       fill = constructorRef)) +

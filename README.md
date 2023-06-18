@@ -39,17 +39,15 @@ In this section, I'm going to describe a few tasks that a user can perform using
 
 - Locate & Lookup: for more hardcore fans, there is a possibility to look for and locate certain facts with the visualization tool. They can even specify their desired time periods and tracks in the views and look up the exact information they are interested in.
 
-<div style="page-break-after: always;"></div>
-
 ## Design
 
 The visualization tool is going to be built using:
 
 - working with data: R
 
-- plots: ggplot
+- plots: ggplot2 & plotly
 
-- interaction, UI: R Shiny
+- interaction, UI: R Shiny & plotly
 
 - desktop/web application: TODO
 
@@ -59,19 +57,24 @@ The application has a sidebar on the left, where users can adjust their settings
 
 ## Views
 
-In this section, there are short descriptions of the different views that the tool is going to support.
+In this section, there are short descriptions of the different views that the tool is going to support. In every one of the views, the user can modify the time period, this is one the temporal attribute in the application.
 
-- 1: TODO
+- View 1: Driver Wins
 
-- 2: TODO
+  In this view, there is a treemap showing the most successful drivers in the history of Formula 1 based on their number of wins. Besides the time period, users can specify the minimum and maximum number of wins. This way, they can specifically look at "equally successful" drivers based on the number of races won.
 
-- 3: TODO
+- 2 & 3: Driver & Constructor Championships
 
-- 4: TODO
+  These two views are kind of similar to the first one, but it is about driver and constructor championship titles. Another difference is that these are just a normal bar charts. There is the time period attribute, and also a minimum and maximum number of titles attribute. Here users can look at "equally succesful" drivers and constructors based on the number of titles won.
 
-- 5: TODO
 
-<div style="page-break-after: always;"></div>
+- 4: Best Lap Times
+
+  In this view, users can look at certain tracks and see how lap times have improved over the years. There is an ability to compare two different tracks, and look at the differences in characteristics. It can be interesting to think about the potential factors that lead to the results presented (such as unpredictable weather conditions, changes in the track layouts, etc).
+
+- 5: Wins From Grid Position
+
+  This view gives the users two pie charts, where they can compare two different tracks as well. Here they can see information about from which grid positions is it most likely to win a race in the selected track based on the historical statistics. On most of the tracks, more than half of the wins came from pole position, but there are some exceptions that are really interesting.
 
 ## Interaction
 
@@ -79,9 +82,17 @@ As mentioned earlier, the users can interact with the plots:
 
 - with the sidebar on the left, they can adjust their settings and the changes will appear instantly on the right side
 
-- the *year* attribute is there for every plot
+- some plots use *plotly* that provides a few basic interaction options as well
 
-- for each plot, there are different attributes that the users can modify
+- the *year* attribute can be adjusted for every plot
+
+- for each plot, there are other specific attributes that the users can modify:
+
+  - View 1: minimum and maximum wins
+
+  - View 2 & 3: minimum and maximum titles
+
+  - View 4 & 5: two tracks to compare
 
 <div style="page-break-after: always;"></div>
 
