@@ -115,9 +115,27 @@ In conclusion, I tried to make an application which is self-explanatory for the 
 
 <div style="page-break-after: always;"></div>
 
-## Prototype
+## Prototypes
 
-TODO
+The development of the code can be tracked in the GitHub repository provided. Every prototype was made in R Studio before the final version was deployed with *shinyapps.io*.
+
+### Prototype 1 - Test plot
+
+To start off, I downloaded the dataset from Kaggle and made a very basic plot to see if everything is working and I can start doing more complex visualizations. This prototype was already presented in the last lecture.
+
+<figure>
+  <img src="pictures/examplePlot.png"/>
+  <figcaption style="text-align: center;">Prototype 1 - Plot</figcaption>
+</figure>
+
+<br>
+
+<figure>
+  <img src="pictures/exampleTask.png"/>
+  <figcaption style="text-align: center;">Prototype 1 - Code</figcaption>
+</figure>
+
+### Prototype 2 - Test plot
 
 <div style="page-break-after: always;"></div>
 
