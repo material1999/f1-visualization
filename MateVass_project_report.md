@@ -214,8 +214,6 @@ In the final prototype, I tried to fix every bug that I found and made the UI ev
   <p align="center">Prototype 4 - Code</p>
 </figure>
 
-<div style="page-break-after: always;"></div>
-
 ## Scenario
 
-TODO
+Finally, one scenario will be showcased in the demo video about how the deployed version of the final application can be used by anyone. This will include switching between tabs, changing attributes, comparing results, etc.
