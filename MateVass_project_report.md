@@ -121,7 +121,9 @@ The development of the code can be tracked in the GitHub repository provided. Ev
 
 ### Prototype 1 - Test plot
 
-To start off, I downloaded the dataset from Kaggle and made a very basic plot to see if everything is working and I can start doing more complex visualizations. This prototype was already presented in the last lecture.
+To start off, I downloaded the dataset from Kaggle and made a very basic plot to see if everything is working and I can start doing more complex visualizations. This prototype was already presented in the last lecture. Here, everything was hardcoded, and the UI was still missing.
+
+<br>
 
 <figure>
   <img src="pictures/examplePlot.png"/>
@@ -136,6 +138,34 @@ To start off, I downloaded the dataset from Kaggle and made a very basic plot to
 </figure>
 
 ### Prototype 2 - Test plot
+
+In the second prototype, I created the base of the UI with some controls. However, these controls were still not functional. But for each tab, I added a different plot and the users could switch between them. This was the first interaction they could do with the visualizations.
+
+<figure>
+  <img src="pictures/2_1.png"/>
+  <figcaption style="text-align: center;">Prototype 2 - Plot 1</figcaption>
+</figure>
+
+<br>
+
+<figure>
+  <img src="pictures/2_2.png"/>
+  <figcaption style="text-align: center;">Prototype 2 - Plot 2</figcaption>
+</figure>
+
+<figure>
+  <img src="pictures/2_3.png"/>
+  <figcaption style="text-align: center;">Prototype 2 - Plot 5</figcaption>
+</figure>
+
+<br>
+
+<figure>
+  <img src="pictures/2_4.png"/>
+  <figcaption style="text-align: center;">Prototype 2 - Code</figcaption>
+</figure>
+
+
 
 <div style="page-break-after: always;"></div>
 
