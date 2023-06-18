@@ -130,8 +130,6 @@ To start off, I downloaded the dataset from Kaggle and made a very basic plot to
   <p align="center">Prototype 1 - Plot</p>
 </figure>
 
-<br>
-
 <figure>
   <img src="pictures/exampleTask.png"/>
   <p align="center">Prototype 1 - Code</p>
@@ -146,8 +144,6 @@ In the second prototype, I created the base of the UI with some controls. Howeve
   <p align="center">Prototype 2 - Plot 1</p>
 </figure>
 
-<br>
-
 <figure>
   <img src="pictures/2_2.png"/>
   <p align="center">Prototype 2 - Plot 2</p>
@@ -157,8 +153,6 @@ In the second prototype, I created the base of the UI with some controls. Howeve
   <img src="pictures/2_3.png"/>
   <p align="center">Prototype 2 - Plot 5</p>
 </figure>
-
-<br>
 
 <figure>
   <img src="pictures/2_4.png"/>
@@ -179,11 +173,45 @@ In this prototype, I connected the UI controls with the plots itself, so these i
   <p align="center">Prototype 3 - Wins From Grid Position</p>
 </figure>
 
-<br>
-
 <figure>
   <img src="pictures/3_3.png"/>
   <p align="center">Prototype 3 - Code</p>
+</figure>
+
+<div style="page-break-after: always;"></div>
+
+### Prototype 4
+
+In the final prototype, I tried to fix every bug that I found and made the UI even more interactive with some plots created using *plotly*. I also made the visualiaztions more interesting, I customized the pie charts even more and I introduced a treemap as well for one of the views.
+
+<figure>
+  <img src="pictures/4_1.png"/>
+  <p align="center">Prototype 4 - Driver Wins</p>
+</figure>
+
+<figure>
+  <img src="pictures/4_2.png"/>
+  <p align="center">Prototype 4 - Driver Championships</p>
+</figure>
+
+<figure>
+  <img src="pictures/4_3.png"/>
+  <p align="center">Prototype 4 - Constructor Championships</p>
+</figure>
+
+<figure>
+  <img src="pictures/4_4.png"/>
+  <p align="center">Prototype 4 - Best Lap Times</p>
+</figure>
+
+<figure>
+  <img src="pictures/4_5.png"/>
+  <p align="center">Prototype 4 - Wins From Grid Position</p>
+</figure>
+
+<figure>
+  <img src="pictures/4_6.png"/>
+  <p align="center">Prototype 4 - Code</p>
 </figure>
 
 <div style="page-break-after: always;"></div>
