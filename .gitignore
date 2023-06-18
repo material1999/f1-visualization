@@ -51,3 +51,5 @@ rsconnect/
 /help/
 .DS_Store
 *.pptx
+app.R
+deploy.R

@@ -11,7 +11,7 @@ library(treemapify)
 
 # Load data --------------------------------------------------------------------
 
-setwd("~/Documents/Egyetem/_MSc/3_szemeszter/erasmus/information_visualization/project/")
+setwd("/Users/matevass/Documents/Egyetem/_MSc/3_szemeszter/erasmus/information_visualization/project/")
 
 results <- read.csv("f1_dataset/results.csv", sep = ",")
 drivers <- read.csv("f1_dataset/drivers.csv", sep = ",")

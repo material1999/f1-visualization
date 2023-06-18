@@ -3,6 +3,7 @@
 ## Interesting Formula 1 Statistics
 ## Made by: Máté Vass (76220125)
 ## GitHub repository: <a href="https://github.com/material1999/f1-visualization">Check out the repository!</a>
+## Deployed version: <a href="https://material1999.shinyapps.io/project/">Check out the application!</a>
 ## Demo Video: TODO
 
 ---
@@ -39,7 +40,7 @@ In this section, I'm going to describe a few tasks that a user can perform using
 
 - Locate & Lookup: for more hardcore fans, there is a possibility to look for and locate certain facts with the visualization tool. They can even specify their desired time periods and tracks in the views and look up the exact information they are interested in.
 
-## Design
+## Tools used
 
 The visualization tool is going to be built using:
 
@@ -49,9 +50,9 @@ The visualization tool is going to be built using:
 
 - interaction, UI: R Shiny & plotly
 
-- desktop/web application: TODO
+- web application: shinyapps.io
 
-The application has a sidebar on the left, where users can adjust their settings for the actual plot. On the right side, there are different tabs to select between the available plots. The available settings on the left change dynamically based on which plot is selected.
+The application is deployed using *shinyapps.io*, for the purpose of the presentation and testing the trial with 25 hours of active time is enough.
 
 <div style="page-break-after: always;"></div>
 
@@ -63,16 +64,16 @@ In this section, there are short descriptions of the different views that the to
 
   In this view, there is a treemap showing the most successful drivers in the history of Formula 1 based on their number of wins. Besides the time period, users can specify the minimum and maximum number of wins. This way, they can specifically look at "equally successful" drivers based on the number of races won.
 
-- 2 & 3: Driver & Constructor Championships
+- Views 2 & 3: Driver & Constructor Championships
 
   These two views are kind of similar to the first one, but it is about driver and constructor championship titles. Another difference is that these are just a normal bar charts. There is the time period attribute, and also a minimum and maximum number of titles attribute. Here users can look at "equally succesful" drivers and constructors based on the number of titles won.
 
 
-- 4: Best Lap Times
+- View 4: Best Lap Times
 
   In this view, users can look at certain tracks and see how lap times have improved over the years. There is an ability to compare two different tracks, and look at the differences in characteristics. It can be interesting to think about the potential factors that lead to the results presented (such as unpredictable weather conditions, changes in the track layouts, etc).
 
-- 5: Wins From Grid Position
+- View 5: Wins From Grid Position
 
   This view gives the users two pie charts, where they can compare two different tracks as well. Here they can see information about from which grid positions is it most likely to win a race in the selected track based on the historical statistics. On most of the tracks, more than half of the wins came from pole position, but there are some exceptions that are really interesting.
 
@@ -90,9 +91,27 @@ As mentioned earlier, the users can interact with the plots:
 
   - View 1: minimum and maximum wins
 
-  - View 2 & 3: minimum and maximum titles
+  - Views 2 & 3: minimum and maximum titles
 
-  - View 4 & 5: two tracks to compare
+  - Views 4 & 5: two tracks to compare
+
+<div style="page-break-after: always;"></div>
+
+## Design explanations
+
+In this section, I'm going to explain my decisions regarding the design rationale of the final application.
+
+The application has a sidebar on the left, where users can adjust their settings for the actual plot. On the right side, there are different tabs to select between the available plots. The available settings on the left change dynamically based on which plot is selected. This UI layout is self-explanatory, in European countries we read from left to right, so we will not miss any important information.
+
+I chose the same color theme for every plot, this template is suitable for visually compared people, for example who suffer from color blindness.
+
+I used a tab layout in the main plot view, this way only one view is shown. This helps users focus only on one task at once.
+
+The views are linked in a way that if they have the same modifiable attribute, the changes appear on all of them. For example, if we want to look at driver wins between 2000 and 2010, then when we switch to the driver championships tab, it will already display them between 2000 and 2010. It makes navigation between plots easier.
+
+I tried to chose different types of chart for different purposes. With the treemap in View 1, users can easily see the differences between relatively big values. The bar plots in Views 2 and 3 are easily understandable and self-explanatory. With View 4 we can try to understand certain trends in lap times and compare them between different tracks. With View 5, I tried to showcase the different rates from where drivers have won grand prixs at different tracks.
+
+In conclusion, I tried to make an application which is self-explanatory for the average user. However, it provides some options for those who really want to dig deep into some interesting aspects of Formula 1 and derive meaningful inferences from the provided statistics. The tasks described earlier can be easily performed by anyone, even those which are a little more complicated. The design principles for the whole application were chosen based on these goals.
 
 <div style="page-break-after: always;"></div>
 
