@@ -19,7 +19,7 @@ I found a dataset on Kaggle representing Formula 1 results, statistics and metad
 
 <figure>
   <img src="pictures/1.png"/>
-  <figcaption style="text-align: center; align: center;"><a href="https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020">Check out the dataset!</a></figcaption>
+  <p align="center"><a href="https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020">Check out the dataset!</a></p>
 </figure>
 
 <div style="page-break-after: always;"></div>
@@ -127,14 +127,16 @@ To start off, I downloaded the dataset from Kaggle and made a very basic plot to
 
 <figure>
   <img src="pictures/examplePlot.png"/>
-  <figcaption style="text-align: center;">Prototype 1 - Plot</figcaption>
+  
+  <br>
+  <p align="center">Prototype 1 - Plot</p>
 </figure>
 
 <br>
 
 <figure>
   <img src="pictures/exampleTask.png"/>
-  <figcaption style="text-align: center;">Prototype 1 - Code</figcaption>
+  <p align="center">Prototype 1 - Code</p>
 </figure>
 
 ### Prototype 2 - Test plot
@@ -143,26 +145,26 @@ In the second prototype, I created the base of the UI with some controls. Howeve
 
 <figure>
   <img src="pictures/2_1.png"/>
-  <figcaption style="text-align: center;">Prototype 2 - Plot 1</figcaption>
+  <p align="center">Prototype 2 - Plot 1</p>
 </figure>
 
 <br>
 
 <figure>
   <img src="pictures/2_2.png"/>
-  <figcaption style="text-align: center;">Prototype 2 - Plot 2</figcaption>
+  <p align="center">Prototype 2 - Plot 2</p>
 </figure>
 
 <figure>
   <img src="pictures/2_3.png"/>
-  <figcaption style="text-align: center;">Prototype 2 - Plot 5</figcaption>
+  <p align="center">Prototype 2 - Plot 5</p>
 </figure>
 
 <br>
 
 <figure>
   <img src="pictures/2_4.png"/>
-  <figcaption style="text-align: center;">Prototype 2 - Code</figcaption>
+  <p align="center">Prototype 2 - Code</p>
 </figure>
 
 
