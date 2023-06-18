@@ -4,7 +4,7 @@
 ## Made by: Máté Vass (76220125)
 ## GitHub repository: <a href="https://github.com/material1999/f1-visualization">Check out the repository!</a>
 ## Deployed version: <a href="https://material1999.shinyapps.io/project/">Check out the application!</a>
-## Demo Video: TODO
+## Demo Video: <a href="https://youtu.be/xRgmRMi1T4Y">Check out the demo video!</a>
 
 ---
 
